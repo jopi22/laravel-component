@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+            //get all posts from Models
+        $posts = Post::latest()->get();
+
+            //return view with data
+        return view('posts', compact('posts'));
+    }
+
+
+    public function store(Request $request)
+    {
+           //define validation rules
+       $validator = Validator::make($request->all(), [
+           'title'     => 'required',
+           'content'   => 'required',
+           'cek'   => 'required',
+       ]);
+
+           //check if validation fails
+       if ($validator->fails()) {
+           return response()->json($validator->errors(), 422);
+       }
+
+           //create post
+       $post = Post::create([
+           'title'     => $request->title, 
+           'content'   => $request->content,
+           'cek'   => $request->cek
+       ]);
+
+           //return response
+       return response()->json([
+           'success' => true,
+           'message' => 'Data Berhasil Disimpan!',
+           'data'    => $post  
+       ]);
+   }
+
+
+   public function show(Post $post)
+   {
+              //return response
+      return response()->json([
+          'success' => true,
+          'message' => 'Detail Data Post',
+          'data'    => $post  
+      ]); 
+  }
+
+
+  public function update(Request $request, Post $post)
+  {
+                  //define validation rules
+      $validator = Validator::make($request->all(), [
+          'title'     => 'required',
+          'content'   => 'required',
+          'cek'   => 'required',
+      ]);
+
+                  //check if validation fails
+      if ($validator->fails()) {
+          return response()->json($validator->errors(), 422);
+      }
+
+                  //create post
+      $post->update([
+          'title'     => $request->title, 
+          'content'   => $request->content,
+          'cek'   => $request->cek
+      ]);
+
+                  //return response
+      return response()->json([
+          'success' => true,
+          'message' => 'Data Berhasil Diudapte!',
+          'data'    => $post  
+      ]);
+  }
+
+
+  public function destroy($id)
+  {
+         //delete post by ID
+     Post::where('id', $id)->delete();
+
+         //return response
+     return response()->json([
+         'success' => true,
+         'message' => 'Data Post Berhasil Dihapus!.',
+     ]); 
+ }
+
+}

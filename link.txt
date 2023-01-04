@@ -1,0 +1,3 @@
+Ajax CRUD NoReload : https://fundaofwebit.com/post/laravel-8-ajax-crud-with-example
+Authentifikasi :https://www.youtube.com/watch?v=JU4hQILRKog&ab_channel=KawanKoding
+Relasi Eloquent : https://www.youtube.com/watch?v=vXOKhdufFFA&list=WL&index=11&t=2s&ab_channel=jurnalgalih
